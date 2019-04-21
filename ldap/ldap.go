@@ -83,6 +83,7 @@ func tel(search ...string) string {
 			att = append(att, e.GetAttributeValue(a))
 		}
 		result += fmt.Sprintf(ldapResultFormat, att...)
+		result += "\n"
 	}
 
 	return result

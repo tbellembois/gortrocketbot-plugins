@@ -17,7 +17,7 @@ export LDAP_SERVERPORT="389"
 export LDAP_SERVERBASE="dc=foo,dc=com"
 export LDAP_SEARCHFILTER="(&(cn=*%s*)(|(customAttr=0)(customAttr=9)))"
 export LDAP_MAXRESULTS="10"
-export LDAP_RESULTFORMAT="%s :e-mail: %s :telephone_receiver: %s\n"
+export LDAP_RESULTFORMAT="%s :e-mail: %s :telephone_receiver: %s"
 ```
 
 Displayed information are:
