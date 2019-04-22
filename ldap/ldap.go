@@ -6,8 +6,13 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/BurntSushi/toml"
 	"github.com/tbellembois/gortrocketbot/rocket"
+	"golang.org/x/text/language"
 	"gopkg.in/ldap.v2"
+
+	// localization
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 var (
@@ -32,6 +37,10 @@ var (
 	ldapResultFormat = os.Getenv("LDAP_RESULTFORMAT")
 	// ldap attributes to retrieve
 	ldapAttributes = []string{"cn", "mail", "telephoneNumber"}
+
+	// i18n
+	localizer *i18n.Localizer
+	bundle    *i18n.Bundle
 )
 
 func tel(search ...string) string {
@@ -64,11 +73,11 @@ func tel(search ...string) string {
 	// ldap request
 	if ldapr, err = ldapc.Search(searchRequest); err != nil {
 		fmt.Println(err.Error())
-		return "an error occured"
+		return localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "error", PluralCount: 1})
 	}
 
 	if len(ldapr.Entries) == 0 {
-		return "no entry found"
+		return localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "noentry", PluralCount: 1})
 	}
 
 	// building result
@@ -96,10 +105,19 @@ func init() {
 		log.Panic(err.Error())
 	}
 
+	// i18n initialization
+	bundle = &i18n.Bundle{DefaultLanguage: language.Make(os.Getenv("LDAP_LANGUAGE"))}
+	bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
+	bundle.MustParseMessageFileBytes(LOCALES_EN, "en.toml")
+	bundle.MustParseMessageFileBytes(LOCALES_FR, "fr.toml")
+
+	localizer = i18n.NewLocalizer(bundle)
+
+	help := localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "help", PluralCount: 1})
 	rocket.RegisterPlugin(rocket.Plugin{
 		Name:        "tel",
 		CommandFunc: tel,
 		Args:        []string{},
-		Help:        "Search users telephone number",
+		Help:        help,
 	})
 }
