@@ -23,7 +23,7 @@ func hello(...string) string {
 func init() {
 
 	// i18n initialization
-	bundle = &i18n.Bundle{DefaultLanguage: language.Make(os.Getenv("HELLO_LANGUAGE"))}
+	bundle = &i18n.Bundle{DefaultLanguage: language.Make(os.Getenv("ROCKETP_HELLO_LANGUAGE"))}
 	bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
 	bundle.MustParseMessageFileBytes(LOCALES_EN, "en.toml")
 	bundle.MustParseMessageFileBytes(LOCALES_FR, "fr.toml")

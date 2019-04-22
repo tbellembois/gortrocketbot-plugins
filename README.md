@@ -6,18 +6,26 @@ Gortrocketbot plugin repository.
 
 A sample plugin.
 
+Language is set by environment variable:
+```bash
+export ROCKETP_HELLO_LANGUAGE="fr"
+```
+
+ROCKETP_HELLO_LANGUAGE
+
 ## ldap
 
 Search users in an LDAP directory.
 
-LDAP parameters are retrieved by environment variables:
+Language and LDAP parameters are set by environment variables:
 ```bash
-export LDAP_SERVERURL="ldap.foo.com"
-export LDAP_SERVERPORT="389"
-export LDAP_SERVERBASE="dc=foo,dc=com"
-export LDAP_SEARCHFILTER="(&(cn=*%s*)(|(customAttr=0)(customAttr=9)))"
-export LDAP_MAXRESULTS="10"
-export LDAP_RESULTFORMAT="%s :e-mail: %s :telephone_receiver: %s"
+export ROCKETP_LDAP_LANGUAGE="fr"
+export ROCKETP_LDAP_SERVERURL="ldap.foo.com"
+export ROCKETP_LDAP_SERVERPORT="389"
+export ROCKETP_LDAP_SERVERBASE="dc=foo,dc=com"
+export ROCKETP_LDAP_SEARCHFILTER="(&(cn=*%s*)(|(customAttr=0)(customAttr=9)))"
+export ROCKETP_LDAP_MAXRESULTS="10"
+export ROCKETP_LDAP_RESULTFORMAT="%s :e-mail: %s :telephone_receiver: %s"
 ```
 
 Displayed information are:

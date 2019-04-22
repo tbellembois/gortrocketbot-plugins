@@ -22,19 +22,19 @@ var (
 	ldapmaxattr int
 
 	// ldap serveur url - example: ldap.foo.com
-	ldapServerURL = os.Getenv("LDAP_SERVERURL")
+	ldapServerURL = os.Getenv("ROCKETP_LDAP_SERVERURL")
 	// ldap server port - example: 389
-	ldapServerPort = os.Getenv("LDAP_SERVERPORT")
+	ldapServerPort = os.Getenv("ROCKETP_LDAP_SERVERPORT")
 	// ldap search base - example: dc=foo,dc=com
-	ldapServerBase = os.Getenv("LDAP_SERVERBASE")
+	ldapServerBase = os.Getenv("ROCKETP_LDAP_SERVERBASE")
 	// ldap search filter - example: (&(cn=*%s*)(|(customAttr=0)(customAttr=9)))
 	// "%s" will be replaced by the user search
-	ldapSearchFilter = os.Getenv("LDAP_SEARCHFILTER")
+	ldapSearchFilter = os.Getenv("ROCKETP_LDAP_SEARCHFILTER")
 	// number of max results to display
-	ldapMaxResults = os.Getenv("LDAP_MAXRESULTS")
+	ldapMaxResults = os.Getenv("ROCKETP_LDAP_MAXRESULTS")
 	// Rocket.Chat output format - example: %s :e-mail: %s :telephone_receiver: %s\n
 	// "%s" will be replaced by the ldap attributes
-	ldapResultFormat = os.Getenv("LDAP_RESULTFORMAT")
+	ldapResultFormat = os.Getenv("ROCKETP_LDAP_RESULTFORMAT")
 	// ldap attributes to retrieve
 	ldapAttributes = []string{"cn", "mail", "telephoneNumber"}
 
@@ -106,7 +106,7 @@ func init() {
 	}
 
 	// i18n initialization
-	bundle = &i18n.Bundle{DefaultLanguage: language.Make(os.Getenv("LDAP_LANGUAGE"))}
+	bundle = &i18n.Bundle{DefaultLanguage: language.Make(os.Getenv("ROCKETP_LDAP_LANGUAGE"))}
 	bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
 	bundle.MustParseMessageFileBytes(LOCALES_EN, "en.toml")
 	bundle.MustParseMessageFileBytes(LOCALES_FR, "fr.toml")
