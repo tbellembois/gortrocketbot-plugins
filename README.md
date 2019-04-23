@@ -1,6 +1,6 @@
 # gortrocketbot-plugins
 
-Gortrocketbot plugin repository.
+[Gortrocketbot](https://github.com/tbellembois/gortrocketbot) plugin repository.
 
 ## hello
 
@@ -10,8 +10,6 @@ Language is set by environment variable:
 ```bash
 export ROCKETP_HELLO_LANGUAGE="fr"
 ```
-
-ROCKETP_HELLO_LANGUAGE
 
 ## ldap
 
