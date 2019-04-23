@@ -100,6 +100,13 @@ func tel(search ...string) string {
 
 func init() {
 
+	fmt.Println(fmt.Sprintf("ldapServerURL: %s", ldapServerURL))
+	fmt.Println(fmt.Sprintf("ldapServerPort: %s", ldapServerPort))
+	fmt.Println(fmt.Sprintf("ldapServerBase: %s", ldapServerBase))
+	fmt.Println(fmt.Sprintf("ldapSearchFilter: %s", ldapSearchFilter))
+	fmt.Println(fmt.Sprintf("ldapMaxResults: %s", ldapMaxResults))
+	fmt.Println(fmt.Sprintf("ldapResultFormat: %s", ldapResultFormat))
+
 	// converting ldap max attributes
 	if ldapmaxattr, err = strconv.Atoi(ldapMaxResults); err != nil {
 		log.Panic(err.Error())
