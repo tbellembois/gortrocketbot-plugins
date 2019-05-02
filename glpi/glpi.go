@@ -1,6 +1,7 @@
 package glpi
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"reflect"
@@ -33,7 +34,7 @@ type glpiSearch struct {
 type glpiData struct {
 	Name      string   `json:"1"`
 	Entity    string   `json:"80"`
-	Inventoty string   `json:"6"`
+	Inventory string   `json:"6"`
 	Serial    string   `json:"5"`
 	Location  string   `json:"3"`
 	Person    string   `json:"70"`
@@ -72,25 +73,45 @@ func (g *glpiData) UnmarshalJSON(data []byte) error {
 	}
 
 	// setting "fixed" fields
-	if v["1"] != nil {
+	if v["1"] != nil && v["1"] != "" {
 		g.Name = v["1"].(string)
 	}
-	if v["80"] != nil {
+	if v["80"] != nil && v["80"] != "" {
 		g.Entity = v["80"].(string)
 	}
-	if v["5"] != nil {
-		g.Serial = v["5"].(string)
-	}
-	if v["6"] != nil {
-		g.Inventoty = v["6"].(string)
-	}
-	if v["3"] != nil {
+	if v["3"] != nil && v["3"] != "" {
 		g.Location = v["3"].(string)
 	}
-	if v["70"] != nil {
+	if v["70"] != nil && v["70"] != "" {
 		g.Person = v["70"].(string)
 	}
 	g.Type = v["itemtype"].(string)
+
+	// serial can miss "" and
+	// then is considered as float
+	if v["5"] != nil && v["5"] != "" {
+		tfloat := reflect.TypeOf(v["5"])
+
+		switch tfloat.Kind() {
+		case reflect.Float64:
+			g.Serial = fmt.Sprintf("%f", v["5"].(float64))
+		case reflect.String:
+			g.Serial = v["5"].(string)
+		}
+	}
+
+	// inventory can miss "" and
+	// then is considered as float
+	if v["6"] != nil && v["6"] != "" {
+		tinvent := reflect.TypeOf(v["6"])
+
+		switch tinvent.Kind() {
+		case reflect.Float64:
+			g.Inventory = fmt.Sprintf("%f", v["6"].(float64))
+		case reflect.String:
+			g.Serial = v["6"].(string)
+		}
+	}
 
 	// setting Mac and IP
 	if v["21"] != nil {
@@ -245,7 +266,7 @@ func glpi(args ...string) string {
 	params.Add("criteria[0][field]", strconv.Itoa(glpireq.Criteria[0].Field))
 	params.Add("criteria[0][searchtype]", glpireq.Criteria[0].SearchType)
 	params.Add("criteria[0][value]", glpireq.Criteria[0].Value)
-	params.Add("range", "0-500")
+	params.Add("range", "0-50")
 	params.Add("forcedisplay[0]", "80")
 	params.Add("forcedisplay[1]", "1")
 	params.Add("forcedisplay[2]", "32")
@@ -285,7 +306,7 @@ func glpi(args ...string) string {
 	if len(glpiresp.Data) == 1 {
 		ret = glpiresp.Data[0].Type + "\n"
 		ret += "*nom*: " + glpiresp.Data[0].Name + "\n"
-		ret += "*invent*: " + glpiresp.Data[0].Inventoty + "\n"
+		ret += "*invent*: " + glpiresp.Data[0].Inventory + "\n"
 		ret += "*ser*: " + glpiresp.Data[0].Serial + "\n"
 
 		for i, ip := range glpiresp.Data[0].IP {

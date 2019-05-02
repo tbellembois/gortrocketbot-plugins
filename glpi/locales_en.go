@@ -11,7 +11,7 @@ var LOCALES_EN = []byte(`
 [commandPname]
 	one = "pname"
 [commandPnameHelp]
-	one = "` + "`glpi` " + "`pname`" + ` [part_of_name]"
+	one = "` + "`glpi` " + "`pname`" + ` [part_of_name] (returns 50 results max)"
 [commandOtherserial]
 	one = "serial"
 [commandOtherserialHelp]
