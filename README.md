@@ -30,3 +30,18 @@ Displayed information are:
 - `cn`
 - `mail`
 - `telephoneNumber`
+
+## glpi
+
+Search informations in GLPI.
+This is not a ready to use plugin. It must be modified to everyone's needs.
+
+Language and GLPI parameters are set by environment variables:
+```bash
+export ROCKETP_GLPI_LANGUAGE="fr"
+export ROCKETP_GLPI_SERVERURL="https://glpi.foo.com/glpi"
+export ROCKETP_GLPI_APPTOKEN="glpigeneratedapptoken"
+export ROCKETP_GLPI_USER="rocket"
+export ROCKETP_GLPI_PASSWORD="mypassword"
+export ROCKETP_GLPI_ALLOWEDUSERS="john,jean,eliot"
+```

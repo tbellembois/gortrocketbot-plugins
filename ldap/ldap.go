@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/BurntSushi/toml"
+	"github.com/RocketChat/Rocket.Chat.Go.SDK/models"
 	"github.com/tbellembois/gortrocketbot/rocket"
 	"golang.org/x/text/language"
 	"gopkg.in/ldap.v2"
@@ -126,5 +127,8 @@ func init() {
 		CommandFunc: tel,
 		Args:        []string{},
 		Help:        help,
+		IsAllowed: func(models.User) bool {
+			return true
+		},
 	})
 }

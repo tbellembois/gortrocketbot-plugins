@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/BurntSushi/toml"
+	"github.com/RocketChat/Rocket.Chat.Go.SDK/models"
 	"github.com/tbellembois/gortrocketbot/rocket"
 	"golang.org/x/text/language"
 
@@ -15,6 +16,9 @@ var (
 	localizer *i18n.Localizer
 	bundle    *i18n.Bundle
 )
+
+type helloPlugin struct {
+}
 
 func hello(...string) string {
 	return localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "hello", PluralCount: 1})
@@ -36,5 +40,8 @@ func init() {
 		CommandFunc: hello,              // command bind function
 		Args:        []string{"a", "b"}, // command arguments (not used here, just for example)
 		Help:        help,               // command help
+		IsAllowed: func(models.User) bool { // everybody can run the plugin
+			return true
+		},
 	})
 }
