@@ -7,4 +7,6 @@ var LOCALES_FR = []byte(`
 	one = "Aucune personne trouvée"
 [error]
 	one = "Une erreur est survenue"
+[commandTelHelp]
+	one = "` + "`tel` " + ` [partie_du_nom]"
 `)

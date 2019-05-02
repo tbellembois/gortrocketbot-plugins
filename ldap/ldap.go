@@ -44,7 +44,15 @@ var (
 	bundle    *i18n.Bundle
 )
 
+func help() string {
+	return localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "commandTelHelp", PluralCount: 1})
+}
+
 func tel(search ...string) string {
+
+	if len(search) == 0 {
+		return help()
+	}
 
 	result := ""
 
