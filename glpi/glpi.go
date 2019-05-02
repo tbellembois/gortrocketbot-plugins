@@ -73,35 +73,50 @@ func (g *glpiData) UnmarshalJSON(data []byte) error {
 	}
 
 	// setting "fixed" fields
-	g.Name = v["1"].(string)
-	g.Entity = v["80"].(string)
-	g.Serial = v["5"].(string)
-	g.Inventoty = v["6"].(string)
-	g.Location = v["3"].(string)
+	if v["1"] != nil {
+		g.Name = v["1"].(string)
+	}
+	if v["80"] != nil {
+		g.Entity = v["80"].(string)
+	}
+	if v["5"] != nil {
+		g.Serial = v["5"].(string)
+	}
+	if v["6"] != nil {
+		g.Inventoty = v["6"].(string)
+	}
+	if v["3"] != nil {
+		g.Location = v["3"].(string)
+	}
 	if v["70"] != nil {
 		g.Person = v["70"].(string)
 	}
 	g.Type = v["itemtype"].(string)
 
 	// setting Mac and IP
-	tmac := reflect.TypeOf(v["21"])
-	tip := reflect.TypeOf(v["126"])
-	switch tmac.Kind() {
-	case reflect.Slice:
-		for _, m := range v["21"].([]interface{}) {
-			g.Mac = append(g.Mac, m.(string))
+	if v["21"] != nil {
+		tmac := reflect.TypeOf(v["21"])
+
+		switch tmac.Kind() {
+		case reflect.Slice:
+			for _, m := range v["21"].([]interface{}) {
+				g.Mac = append(g.Mac, m.(string))
+			}
+		case reflect.String:
+			g.Mac = []string{v["21"].(string)}
 		}
-	case reflect.String:
-		g.Mac = []string{v["21"].(string)}
 	}
 
-	switch tip.Kind() {
-	case reflect.Slice:
-		for _, m := range v["126"].([]interface{}) {
-			g.IP = append(g.Mac, m.(string))
+	if v["126"] != nil {
+		tip := reflect.TypeOf(v["126"])
+		switch tip.Kind() {
+		case reflect.Slice:
+			for _, m := range v["126"].([]interface{}) {
+				g.IP = append(g.Mac, m.(string))
+			}
+		case reflect.String:
+			g.IP = []string{v["126"].(string)}
 		}
-	case reflect.String:
-		g.IP = []string{v["126"].(string)}
 	}
 
 	return nil
