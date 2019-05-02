@@ -1,7 +1,6 @@
 package glpi
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"reflect"
@@ -308,8 +307,6 @@ func glpi(args ...string) string {
 }
 
 func init() {
-
-	fmt.Println(allowedUsers)
 
 	// gorilla schema encoder initialization
 	encoder = schema.NewEncoder()
